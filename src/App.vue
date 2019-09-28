@@ -2,6 +2,7 @@
   <div id="app">
     <div class="bg-color">
       <div class="brand text-center">veritas</div>
+      <div class="text-center text-white">a truthserum for the Internet.</div>
     </div>
     <div class="background">
     <div class="d-flex justify-content-center">
@@ -45,9 +46,9 @@ html, body {
 
 .brand {
   font-family: $Cairo;
-  font-size: 3rem;
+  font-size: 4rem;
   color: white;
-  padding: 1rem 0;
+  padding-top: 3rem;
 }
 
 .shield {
@@ -93,7 +94,7 @@ html, body {
 
 .bg-color {
   background-color: #2c3e50;
-  height: 100px;
+  height: 200px;
 }
 
 .background {

@@ -1,20 +1,19 @@
 <template>
   <div>
       <div class="d-flex flex-column align-items-center">
-        <div class="col-10">
         
-        <b-form-input v-model="url" placeholder="Enter URL to notarize"></b-form-input>
+        <b-form-input v-model="url" placeholder="https://www.example.com"></b-form-input>
 
         <div class="btn-group">
-          <button class="btn btn-success my-4" :disabled="!url" @click="notarize(url)">Generate Proof</button>
+          <button class="btn btn-primary my-4" :disabled="!url" @click="notarize(url)">Generate Proof</button>
           <a class="btn btn-secondary my-4" :href="'data:' + downloadData" :class="{ 'disabled': !downloadData, 'btn-success': downloadData }" download="notarized.proof">Download Proof</a>
         </div>
 
         </div>
-        <div class="col-12" v-if="proofs.length > 0">
-          <Diff :proofs="proofs" />
-        </div>
-      </div>
+
+        <hr />
+
+        <Diff :proofs="proofs" />
   </div>
 </template>
 

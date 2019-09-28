@@ -1,7 +1,6 @@
 <template>
   <div>
       <div class="d-flex flex-column align-items-center">
-        <div class="col-10">
         <b-form-file
             v-model="file"
             :state="Boolean(file)"
@@ -9,20 +8,20 @@
             drop-placeholder="Drop file here..."
         />
 
-        <button class="btn btn-secondary my-4" :disabled="!fileContent" @click="validate(fileContent)">Validate</button>
+        <button class="btn btn-primary my-4" :disabled="!fileContent" @click="validate(fileContent)">Validate</button>
 
-        <div class="validators d-flex flex-row justify-content-center">
+        <div class="validators d-flex flex-row justify-content-center text-center">
           <div class="validator px-3" v-for="validator in validators" :key="validator.key">
-            <shield-icon size="3x"  :style="{ color: validator.validated ? 'green' : 'red' }"></shield-icon><br>
+            <shield-icon size="3x" class="non-validated" :class="{ 'validated' : validator.validated }"></shield-icon><br>
             {{ validator.label }}
           </div>           
         </div>
 
         </div>
-        <div class="col-12">
-          <Diff :proofs="fileSrcArray" :current="current" />
-        </div>
-      </div>
+        
+        <hr />
+
+        <Diff :proofs="fileSrcArray" :current="current" />
   </div>
 </template>
 
@@ -61,7 +60,7 @@ export default {
         this.fileSrcArray.push(validationPart) 
       }))
 
-      const response = await fetch(`https://proof.viser.ch?url=${encodeURIComponent(this.fileContent[0].url)}`)
+      const response = await fetch(`https://proof.viser.ch?url=${encodeURIComponent(fileContent[0].url)}`)
       this.current = await response.json()
     }
   },
@@ -77,10 +76,21 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../custom.scss';
+
+.non-validated {
+  color: $green;
+}
+
+.validated {
+  color: $blue
+}
+
 .iframe {
   width: 100%;
-  min-height: 300px;
-  border: 1px solid green;
+  min-height: 600px;
+  border: 1px solid white;
+  background-color: white;
 }
 </style>
