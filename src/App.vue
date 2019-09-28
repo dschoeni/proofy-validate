@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="container">
+      <img alt="Vue logo" src="./assets/logo.png" class="py-4" />
+      <Validate />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Validate from "./components/validate.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    Validate
   }
 };
 </script>
