@@ -16,10 +16,10 @@
       <div class="d-flex justify-content-center">
       <ul class="nav py-4">
         <li class="nav-item">
-          <router-link class="nav-link" to="/">Generate</router-link>
+          <router-link style="margin-right:20px;" class="btn btn-primary my-4" to="/">Generate</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/validate">Validate</router-link>
+          <router-link class="btn btn-primary my-4" to="/validate">Validate</router-link>
         </li>
       </ul>
       </div>
