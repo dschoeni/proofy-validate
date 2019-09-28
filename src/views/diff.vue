@@ -1,17 +1,26 @@
 <template>
     <b-tabs pills justified content-class="mt-3">
-      <b-tab v-for="(proof, index) in proofs" :key="proof.validator" :title="proof.validator">
-        <div><small>Hash: <br><span class="text-white">{{ convertToString(proof.hash) }}</span></small></div>
-        <div class="pb-3"><small>Signature: <br><span class="text-white">{{ convertToString(proof.signature) }}</span></small></div>
+      <b-tab v-for="(validator, index) in validators" :key="validator.key" :disabled="!proofs[index]">
+        <template v-slot:title>
+          <font-awesome-icon v-if="validator.isGenerating" spin :icon="['fas', 'circle-notch']" />
+          <font-awesome-icon v-if="proofs[index]" :icon="['fas', 'file-alt']" />
+           {{ validator.label }}
+        </template>
 
-        <iframe sandbox class="iframe" v-if="diffs[index]" :srcDoc="baseUrlCorrection(diffs[index])" />
-        <iframe sandbox class="iframe" v-if="!diffs[index]" :srcDoc="baseUrlCorrection(proof)" />
+        <div v-if="proofs[index]">
+          <div><small>Hash: <br><span class="text-white">{{ convertToString(proofs[index].hash) }}</span></small></div>
+          <div class="pb-3"><small>Signature: <br><span class="text-white">{{ convertToString(proofs[index].signature) }}</span></small></div>
+
+          <iframe sandbox class="iframe" v-if="diffs[index]" :srcDoc="baseUrlCorrection(diffs[index])" />
+          <iframe sandbox class="iframe" v-if="!diffs[index]" :srcDoc="baseUrlCorrection(proofs[index])" />
+        </div>
       </b-tab>
     </b-tabs>
 </template>
 
 <script>
 import HtmlDiff from 'htmldiff-js'
+import validationService from '@/services/validator'
 
 function buf2hex(buffer) { // buffer is an ArrayBuffer
   return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
@@ -26,7 +35,7 @@ String.prototype.insert = function (index, string) {
 
 export default {
   name: "Diff",
-  props: ['proofs', 'current'],
+  props: ['proofs', 'current', { name: 'isGenerating', default: false }],
   methods: {
     baseUrlCorrection(proof) {
       return proof.signed.source.insert(proof.signed.source.indexOf('<head>'), `<base href="${proof.url}" />`)
@@ -36,6 +45,9 @@ export default {
     }
   },
   computed: {
+    validators() {
+      return validationService.validators
+    },
     diffs() {
       return this.proofs.map(proof => {
         if (!this.current) {
@@ -65,6 +77,9 @@ export default {
 </script>
 
 <style lang="scss">
+.nav-link.disabled {
+  opacity: 0.5;
+}
 .nav .nav-link.active:hover {
   color: white !important;
 }

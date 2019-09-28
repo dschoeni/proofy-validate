@@ -10,18 +10,18 @@
 
         <button class="btn btn-primary my-4" :disabled="!fileContent" @click="validate(fileContent)">Validate</button>
 
-        <div class="validators d-flex flex-row justify-content-center text-center">
+        <div class="card bg-white m-4 p-4 validators d-flex flex-row justify-content-center text-center">
           <div class="validator px-3" v-for="validator in validators" :key="validator.key">
             <shield-icon size="3x" class="non-validated" :class="{ 'validated' : validator.validated }"></shield-icon><br>
             {{ validator.label }}
           </div>           
         </div>
 
-        </div>
-        
-        <hr />
+      </div>
+      
+    <hr />
 
-        <Diff :proofs="fileSrcArray" :current="current" />
+    <Diff :proofs="fileSrcArray" :current="current" />
   </div>
 </template>
 
@@ -45,6 +45,11 @@ export default {
       reader.readAsText(file)
     }
   },
+  computed: {
+    validators() {
+      return validationService.validators
+    } 
+  },
   methods: {
     async validate(fileContent) {
       this.fileSrcArray.length = 0
@@ -67,7 +72,6 @@ export default {
   data() {
     return {
       current: null,
-      validators: validationService.validators(),
       fileSrcArray: [],
       fileContent: null,
       file: null
@@ -84,7 +88,7 @@ export default {
 }
 
 .validated {
-  color: $blue
+  color: $green;
 }
 
 .iframe {
