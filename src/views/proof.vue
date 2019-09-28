@@ -78,7 +78,8 @@ export default {
 
 .iframe {
   width: 100%;
-  min-height: 300px;
+  min-height: 600px;
   border: 1px solid green;
+  background: white;
 }
 </style>

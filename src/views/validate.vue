@@ -95,6 +95,6 @@ export default {
   width: 100%;
   min-height: 600px;
   border: 1px solid white;
-  background-color: white;
+  background: white;
 }
 </style>
