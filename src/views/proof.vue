@@ -5,13 +5,14 @@
         
         <b-form-input v-model="url" placeholder="Enter URL to notarize"></b-form-input>
 
-        <button class="btn btn-primary my-4" :disabled="!url" @click="notarize(url)">Notarize</button>
-
-        <a class="btn btn-primary my-4" :href="'data:' + downloadData" :class="{ 'disabled': !downloadData }" download="notarized.proof">Download Proof</a>
+        <div class="btn-group">
+          <button class="btn btn-success my-4" :disabled="!url" @click="notarize(url)">Generate Proof</button>
+          <a class="btn btn-secondary my-4" :href="'data:' + downloadData" :class="{ 'disabled': !downloadData, 'btn-success': downloadData }" download="notarized.proof">Download Proof</a>
+        </div>
 
         </div>
-        <div class="col-12">
-          <iframe :srcdoc="fileSrc" class="iframe"></iframe>
+        <div class="col-12" v-if="proofs.length > 0">
+          <Diff :proofs="proofs" :current="current" />
         </div>
       </div>
   </div>
@@ -22,26 +23,31 @@ import validationService from '@/services/validator'
 
 export default {
   name: "Notarize",
+  components: {
+    Diff: () => import('@/views/diff.vue')
+  },
   methods: {
     async notarize(url) {
-      const validatedData = []
+      this.proofs = []
 
       await Promise.all(this.validators.map(async (validator) => {
         const response = await fetch(`https://proof.viser.ch?url=${encodeURIComponent(url)}`)
         const jsonAnswer = await response.json()
         jsonAnswer.validator = validator.key
-        validatedData.push(jsonAnswer)
+        jsonAnswer.url = url
+        this.proofs.push(jsonAnswer)
       }))
       
-      this.downloadData = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(validatedData));
+      this.downloadData = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.proofs));
     }
   },
   data() {
     return {
       validators: validationService.validators(),
-      url: null,
+      url: 'https://www.example.com',
       fileSrc: '',
-      downloadData: null
+      downloadData: null,
+      proofs: []
     }
   }
 };

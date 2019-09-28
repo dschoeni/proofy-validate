@@ -9,7 +9,7 @@
             drop-placeholder="Drop file here..."
         />
 
-        <button class="btn btn-primary my-4" :disabled="!fileContent" @click="validate(fileContent)">Validate</button>
+        <button class="btn btn-secondary my-4" :disabled="!fileContent" @click="validate(fileContent)">Validate</button>
 
         <div class="validators d-flex flex-row justify-content-center">
           <div class="validator px-3" v-for="validator in validators" :key="validator.key">
@@ -20,7 +20,7 @@
 
         </div>
         <div class="col-12">
-          <Diff :proofs="fileSrcArray" :current="fileSrcArray[0]" />
+          <Diff :proofs="fileSrcArray" :current="current" />
         </div>
       </div>
   </div>
@@ -48,8 +48,8 @@ export default {
   },
   methods: {
     async validate(fileContent) {
-      console.log(fileContent)
-
+      this.fileSrcArray.length = 0
+      
       await Promise.all(fileContent.map(async (validationPart) => {
         const hashOfSource = await window.crypto.subtle.digest("SHA-256",
           new TextEncoder("utf-8").encode(validationPart.signed.timestamp + validationPart.signed.source)
@@ -60,10 +60,14 @@ export default {
         const correctValidator = this.validators.find(validator => validator.key === validationPart.validator).validated = result
         this.fileSrcArray.push(validationPart) 
       }))
+
+      const response = await fetch(`https://proof.viser.ch?url=${encodeURIComponent(this.fileContent[0].url)}`)
+      this.current = await response.json()
     }
   },
   data() {
     return {
+      current: null,
       validators: validationService.validators(),
       fileSrcArray: [],
       fileContent: null,

@@ -1,21 +1,68 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Proof</router-link> |
-      <router-link to="/validate">Validate</router-link> | 
-      <router-link to="/diff">Diff</router-link>
+    <div class="bg-color">
+    
     </div>
-    <router-view/>
+    <div class="background">
+    <div class="d-flex justify-content-center">
+      <div id="logo">
+
+      </div>
+    </div>
+    </div>
+    <div class="container">
+      <div id="nav text-center text-white">
+      <router-link to="/">Generate</router-link> |
+      <router-link to="/validate">Validate</router-link>
+      </div>
+      <router-view/>
+    </div>
   </div>
 </template>
 
-<style>
+<script>
+import * as Vivus from 'vivus'
+
+export default {
+  mounted() {
+    const myVivus = new Vivus('logo', { duration: 3000, file: 'logo.svg', animTimingFunction: Vivus.EASE });
+    myVivus.play()
+  }
+}
+</script>
+
+<style lang="scss">
+@import './custom.scss';
+
+html, body {
+  height: 100%;
+  background-color: #09b39c;
+}
+
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  font-family: $Roboto;
+  font-display: auto;
+  text-rendering: optimizeLegibility;
+
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.bg-color {
+  background-color: #2c3e50;
+  height: 100px;
+}
+
+.background {
+  background: url('assets/bg2.png');
+  background-repeat: no-repeat;
+}
+
+#logo {
+  width: 150px;
+  padding-bottom: 3rem;
+
+  svg {
+    fill: white;
+  }
 }
 </style>

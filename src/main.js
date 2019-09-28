@@ -1,12 +1,10 @@
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 
+import '@/custom.scss'
+
 Vue.use(BootstrapVue)
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-// font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
