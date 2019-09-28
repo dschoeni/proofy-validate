@@ -20,7 +20,7 @@
 
         </div>
         <div class="col-12">
-          <iframe v-if="fileSrcArray.length > 0" :srcdoc="fileSrcArray[0]" class="iframe"></iframe>
+          <Diff :proofs="fileSrcArray" :current="fileSrcArray[0]" />
         </div>
       </div>
   </div>
@@ -29,11 +29,13 @@
 <script>
 import validationService from '@/services/validator'
 import { ShieldIcon } from 'vue-feather-icons'
+import Diff from '@/views/diff.vue'
 
 export default {
   name: "Validate",
   components: {
-    ShieldIcon
+    ShieldIcon,
+    Diff
   },
   watch: {
     file(file) {
@@ -56,7 +58,7 @@ export default {
         const result = await validationService.validate(validationPart.signature, hashOfSource)
 
         const correctValidator = this.validators.find(validator => validator.key === validationPart.validator).validated = result
-        this.fileSrcArray.push(validationPart.signed.source) 
+        this.fileSrcArray.push(validationPart) 
       }))
     }
   },

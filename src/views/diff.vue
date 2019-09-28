@@ -1,9 +1,9 @@
 <template>
-  <div class="row">
-    <button @click="diff">Diff </button>
-
-    <iframe class="iframe" v-if="diffHtml" :srcDoc="diffHtml" />
-  </div>
+    <b-tabs content-class="mt-3">
+      <b-tab :title="proof.validator" v-for="proof in proofs" :key="proof.validator">
+        <iframe class="iframe" v-if="diffs[proof.validator]" :srcDoc="diffs[proof.validator]" />
+      </b-tab>
+    </b-tabs>
 </template>
 
 <script>
@@ -12,22 +12,29 @@ import proof from './proof.json'
 
 export default {
   name: "Diff",
-  methods: {
-    diff() {
-      const html1 = proof[0].signed.source
-      const html2 = proof[1].signed.source
+  props: ['current', 'proofs'],
+  mounted() {
+    this.$props.proofs.forEach(proof => {
+      this.diffs[proof.validator] = HtmlDiff.execute(proof.signed.source, correct)
 
-      const doc1 = new Document(html1)
-      const doc2 = new Document(html2)
+      this.diffs[proof.validator] += `
+        <style>
+        ins {
+          background: lightgreen;
+          text-decoration: none;
+        }
 
-      this.diffHtml = HtmlDiff.execute(doc1, doc2);
+        del {
+          background: pink;
+        }
+        </style>
+      `
 
-      console.log(this.diffHtml, HtmlDiff)
-    }
+    })
   },
   data() {
     return {
-      diffHtml: null
+      diffs: {}
     }
   }
 };
@@ -39,4 +46,5 @@ export default {
   min-height: 300px;
   border: 1px solid green;
 }
+
 </style>

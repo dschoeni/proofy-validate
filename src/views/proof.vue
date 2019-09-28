@@ -27,7 +27,7 @@ export default {
       const validatedData = []
 
       await Promise.all(this.validators.map(async (validator) => {
-        const response = await fetch(`http://localhost:3000?url=${encodeURIComponent(url)}`)
+        const response = await fetch(`https://proof.viser.ch?url=${encodeURIComponent(url)}`)
         const jsonAnswer = await response.json()
         jsonAnswer.validator = validator.key
         validatedData.push(jsonAnswer)
