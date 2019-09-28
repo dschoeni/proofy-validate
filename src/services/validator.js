@@ -8,30 +8,28 @@ const publicKey = {
 }
 
 export default {
-  validators() {
-    return [
-      {
-        key: 'swisslex',
-        label: 'Swisslex',
-        validated: false
-      },
-      {
-        key: 'schellenberg',
-        label: 'Schellenberg Wittmer',
-        validated: false
-      },
-      {
-        key: 'kellerhals-carrard',
-        label: 'Kellerhals Carrard',
-        validated: false
-      },
-      {
-        key: 'niederer-kraft-frey',
-        label: 'Niederer Kraft Frey',
-        validated: false
-      }
-    ]
-  },
+  validators: [
+    {
+      key: 'swisslex',
+      label: 'Swisslex',
+      validated: false
+    },
+    {
+      key: 'schellenberg',
+      label: 'Schellenberg Wittmer',
+      validated: false
+    },
+    {
+      key: 'kellerhals-carrard',
+      label: 'Kellerhals Carrard',
+      validated: false
+    },
+    {
+      key: 'niederer-kraft-frey',
+      label: 'Niederer Kraft Frey',
+      validated: false
+    }
+  ],
 
   async validate(signature, data) {
     const key = await window.crypto.subtle.importKey(
