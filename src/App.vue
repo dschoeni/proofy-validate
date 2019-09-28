@@ -1,22 +1,12 @@
 <template>
   <div id="app">
-    <div class="container">
-      <img alt="Vue logo" src="./assets/logo.png" class="py-4" />
-      <Validate />
+    <div id="nav">
+      <router-link to="/">Proof</router-link> |
+      <router-link to="/validate">Validate</router-link>
     </div>
+    <router-view/>
   </div>
 </template>
-
-<script>
-import Validate from "./components/validate.vue";
-
-export default {
-  name: "app",
-  components: {
-    Validate
-  }
-};
-</script>
 
 <style>
 #app {
