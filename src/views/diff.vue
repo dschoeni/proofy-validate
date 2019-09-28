@@ -69,7 +69,7 @@ export default {
           </style>
         `
 
-        return diff
+        return {signed: {source: diff}}
       })
     }
   }
