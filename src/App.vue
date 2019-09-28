@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Proof</router-link> |
-      <router-link to="/validate">Validate</router-link>
+      <router-link to="/validate">Validate</router-link> | 
+      <router-link to="/diff">Diff</router-link>
     </div>
     <router-view/>
   </div>

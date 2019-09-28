@@ -13,14 +13,14 @@
 
         <div class="validators d-flex flex-row justify-content-center">
           <div class="validator px-3" v-for="validator in validators" :key="validator.key">
-            <font-awesome-icon size="3x" :icon="['fal', validator.validated ? 'shield-check' : 'shield']" :style="{ color: validator.validated ? 'green' : 'red' }" /><br>
+            <shield-icon size="3x"  :style="{ color: validator.validated ? 'green' : 'red' }"></shield-icon><br>
             {{ validator.label }}
           </div>           
         </div>
 
         </div>
         <div class="col-12">
-          <iframe :srcdoc="fileSrc" class="iframe"></iframe>
+          <iframe v-if="fileSrcArray.length > 0" :srcdoc="fileSrcArray[0]" class="iframe"></iframe>
         </div>
       </div>
   </div>
@@ -28,9 +28,13 @@
 
 <script>
 import validationService from '@/services/validator'
+import { ShieldIcon } from 'vue-feather-icons'
 
 export default {
   name: "Validate",
+  components: {
+    ShieldIcon
+  },
   watch: {
     file(file) {
       const reader = new FileReader();
@@ -42,45 +46,25 @@ export default {
   },
   methods: {
     async validate(fileContent) {
-      const hashOfSource = await window.crypto.subtle.digest(
-        "SHA-256",
-        new TextEncoder("utf-8").encode(fileContent.signed.timestamp + fileContent.signed.source)
-      );
+      console.log(fileContent)
 
-      const result = await validationService.validate(fileContent.signature, hashOfSource)
+      await Promise.all(fileContent.map(async (validationPart) => {
+        const hashOfSource = await window.crypto.subtle.digest("SHA-256",
+          new TextEncoder("utf-8").encode(validationPart.signed.timestamp + validationPart.signed.source)
+        );
 
-      this.validators.forEach((validator) => {
-        setTimeout(() => {
-          validator.validated = result
-        }, Math.floor(Math.random() * 500) + 1)
-      })
+        const result = await validationService.validate(validationPart.signature, hashOfSource)
 
-      this.fileSrc = fileContent.signed.source
-      this.isValidated = result
+        const correctValidator = this.validators.find(validator => validator.key === validationPart.validator).validated = result
+        this.fileSrcArray.push(validationPart.signed.source) 
+      }))
     }
   },
   data() {
     return {
-      validators: [{
-        key: 'swisslex',
-        label: 'Swisslex',
-        validated: false
-      },{
-        key: 'schellenberg',
-        label: 'Schellenberg Wittmer',
-        validated: false
-      },{
-        key: 'kellerhals-carrard',
-        label: 'Kellerhals Carrard',
-        validated: false
-      },{
-        key: 'niederer-kraft-frey',
-        label: 'Niederer Kraft Frey',
-        validated: false
-      }],
-      fileSrc: "",
+      validators: validationService.validators(),
+      fileSrcArray: [],
       fileContent: null,
-      isValidated: false,
       file: null
     }
   }

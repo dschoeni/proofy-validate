@@ -10,12 +10,17 @@ export default new Router({
     {
       path: '/',
       name: 'proof',
-      component: () => import(/* webpackChunkName: "about" */ './views/proof.vue')
+      component: () => import(/* webpackChunkName: "proof" */ './views/proof.vue')
     },
     {
       path: '/validate',
       name: 'validate',
-      component: () => import(/* webpackChunkName: "about" */ './views/validate.vue')
+      component: () => import(/* webpackChunkName: "validate" */ './views/validate.vue')
+    },
+    {
+      path: '/diff',
+      name: 'diff',
+      component: () => import(/* webpackChunkName: "diff" */ './views/diff.vue')
     }
   ]
 })

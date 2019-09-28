@@ -14,7 +14,9 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.2",
     "core-js": "^2.6.5",
+    "htmldiff-js": "^1.0.5",
     "vue": "^2.6.10",
+    "vue-feather-icons": "^5.0.0",
     "vue-router": "^3.0.3"
   },
   "devDependencies": {

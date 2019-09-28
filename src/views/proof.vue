@@ -7,6 +7,8 @@
 
         <button class="btn btn-primary my-4" :disabled="!url" @click="notarize(url)">Notarize</button>
 
+        <a class="btn btn-primary my-4" :href="'data:' + downloadData" :class="{ 'disabled': !downloadData }" download="notarized.proof">Download Proof</a>
+
         </div>
         <div class="col-12">
           <iframe :srcdoc="fileSrc" class="iframe"></iframe>
@@ -16,17 +18,30 @@
 </template>
 
 <script>
+import validationService from '@/services/validator'
 
 export default {
   name: "Notarize",
   methods: {
     async notarize(url) {
+      const validatedData = []
+
+      await Promise.all(this.validators.map(async (validator) => {
+        const response = await fetch(`http://localhost:3000?url=${encodeURIComponent(url)}`)
+        const jsonAnswer = await response.json()
+        jsonAnswer.validator = validator.key
+        validatedData.push(jsonAnswer)
+      }))
       
+      this.downloadData = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(validatedData));
     }
   },
   data() {
     return {
-      url: null
+      validators: validationService.validators(),
+      url: null,
+      fileSrc: '',
+      downloadData: null
     }
   }
 };
