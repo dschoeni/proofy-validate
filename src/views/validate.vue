@@ -90,11 +90,4 @@ export default {
 .validated {
   color: $green;
 }
-
-.iframe {
-  width: 100%;
-  min-height: 600px;
-  border: 1px solid white;
-  background: white;
-}
 </style>

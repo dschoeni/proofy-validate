@@ -54,6 +54,9 @@ export default {
           return null
         }
 
+        // demo
+        this.current.signed.source = this.current.signed.source.replace(' und absolut rostfrei.', '.')
+
         let diff = HtmlDiff.execute(this.current.signed.source, proof.signed.source)
 
         diff += `
@@ -90,5 +93,4 @@ export default {
   border: 1px solid white;
   background: white;
 }
-
 </style>
