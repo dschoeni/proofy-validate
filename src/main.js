@@ -9,8 +9,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 // font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 
-import { faShield } from '@fortawesome/pro-light-svg-icons/faShield'
-import { faShieldCheck } from '@fortawesome/pro-light-svg-icons/faShieldCheck'
+import { faShield } from '@fortawesome/free-solid-svg-icons/faShield'
+import { faShieldCheck } from '@fortawesome/free-solid-svg-icons/faShieldCheck'
 
 library.add(faShield, faShieldCheck)
 
