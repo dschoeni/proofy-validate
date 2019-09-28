@@ -12,7 +12,7 @@
 
         </div>
         <div class="col-12" v-if="proofs.length > 0">
-          <Diff :proofs="proofs" :current="current" />
+          <Diff :proofs="proofs" />
         </div>
       </div>
   </div>

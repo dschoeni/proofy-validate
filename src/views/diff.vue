@@ -1,32 +1,40 @@
 <template>
     <b-tabs content-class="mt-3">
-      <b-tab :title="proof.validator" v-for="proof in proofs" :key="proof.validator">
-        <iframe class="iframe" v-if="diffs[proof.validator]" :srcDoc="diffs[proof.validator]" />
-        <iframe class="iframe" v-if="!diffs[proof.validator]" :srcDoc="proof.signed.source" />
+      <b-tab v-for="(proof, index) in proofs" :key="proof.validator" :title="proof.validator">
+        <iframe class="iframe" v-if="diffs[index]" :srcDoc="baseUrlCorrection(diffs[index])" />
+        <iframe class="iframe" v-if="!diffs[index]" :srcDoc="baseUrlCorrection(proof)" />
       </b-tab>
     </b-tabs>
 </template>
 
 <script>
 import HtmlDiff from 'htmldiff-js'
-import proof from './proof.json'
+
+String.prototype.insert = function (index, string) {
+  if (index > 0)
+    return this.substring(0, index) + string + this.substring(index, this.length);
+
+  return string + this;
+};
 
 export default {
   name: "Diff",
   props: ['proofs', 'current'],
-  watch: {
-    current(current) {
-      if (this.$props.current) {
-        this.diff()
-      }
+  methods: {
+    baseUrlCorrection(proof) {
+      return proof.signed.source.insert(proof.signed.source.indexOf('<head>'), `<base href="${proof.url}" />`)
     }
   },
-  methods: {
-    async diff() {
-      this.$props.proofs.forEach(proof => {
-        this.diffs[proof.validator] = HtmlDiff.execute(this.$props.current.signed.source, proof.signed.source)
+  computed: {
+    diffs() {
+      return this.proofs.map(proof => {
+        if (!this.current) {
+          return null
+        }
 
-        this.diffs[proof.validator] += `
+        let diff = HtmlDiff.execute(this.current.signed.source, proof.signed.source)
+
+        diff += `
           <style>
           ins {
             background: lightgreen;
@@ -38,12 +46,9 @@ export default {
           }
           </style>
         `
+
+        return diff
       })
-    }
-  },
-  data() {
-    return {
-      diffs: {}
     }
   }
 };

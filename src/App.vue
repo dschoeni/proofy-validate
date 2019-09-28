@@ -1,19 +1,26 @@
 <template>
   <div id="app">
     <div class="bg-color">
-    
+      <div class="brand text-center">veritas</div>
     </div>
     <div class="background">
     <div class="d-flex justify-content-center">
-      <div id="logo">
-
+      <div class="logo">
+        <object class="shield" type="image/svg+xml" data="logo.svg"></object>
+        <object class="flask" type="image/svg+xml" data="flask.svg"></object>
       </div>
     </div>
     </div>
     <div class="container">
-      <div id="nav text-center text-white">
-      <router-link to="/">Generate</router-link> |
-      <router-link to="/validate">Validate</router-link>
+      <div class="d-flex justify-content-center">
+      <ul class="nav py-4">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/">Generate</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/validate">Validate</router-link>
+        </li>
+      </ul>
       </div>
       <router-view/>
     </div>
@@ -21,12 +28,9 @@
 </template>
 
 <script>
-import * as Vivus from 'vivus'
 
 export default {
   mounted() {
-    const myVivus = new Vivus('logo', { duration: 3000, file: 'logo.svg', animTimingFunction: Vivus.EASE });
-    myVivus.play()
   }
 }
 </script>
@@ -37,6 +41,46 @@ export default {
 html, body {
   height: 100%;
   background-color: #09b39c;
+}
+
+.brand {
+  font-family: $Cairo;
+  font-size: 3rem;
+  color: white;
+  padding: 1rem 0;
+}
+
+.shield {
+  width: 200px;
+}
+
+.nav {
+  font-size: 1.2rem;
+
+  .nav-link:hover {
+    color: #2c3e50;
+  }
+
+  .nav-link {
+    color: white;
+  }
+}
+
+.flask {
+  position: absolute;
+  width: 40px;
+  left: 50%;
+  margin-left: -20px;
+  top: 140px;
+
+  svg {
+    fill: white;
+    stroke-width: 100px;
+  }
+}
+
+.logo {
+  position: relative;
 }
 
 #app {
