@@ -17,11 +17,11 @@
           </div>           
         </div>
 
-        </div>
-        
-        <hr />
+      </div>
+      
+    <hr />
 
-        <Diff :proofs="fileSrcArray" :current="current" />
+    <Diff :proofs="fileSrcArray" :current="current" />
   </div>
 </template>
 
@@ -88,7 +88,7 @@ export default {
 }
 
 .validated {
-  color: $blue
+  color: $green;
 }
 
 .iframe {

@@ -3,17 +3,18 @@
     <div class="d-flex flex-column align-items-center">
       <b-form-input v-model="url" placeholder="https://www.example.com"></b-form-input>
 
-        <div class="btn-group">
-          <button class="btn btn-primary my-4" :disabled="!url" @click="notarize(url)">
-            <font-awesome-icon :class="{ 'no-opacity': !isGenerating }" :spin="isGenerating" :icon="['fas', 'circle-notch']" />
-            Generate Proof
-          </button>
-          <a class="btn btn-outline-primary my-4" :href="'data:' + downloadData" :class="{ 'disabled': !downloadData, 'btn-success': downloadData }" download="notarized.proof">Download Proof</a>
-        </div>
+      <div class="btn-group">
+        <button class="btn btn-primary my-4" :disabled="!url" @click="notarize(url)">
+          <font-awesome-icon :class="{ 'no-opacity': !isGenerating }" :spin="isGenerating" :icon="['fas', 'circle-notch']" />
+          Generate Proof
+        </button>
+        <a class="btn btn-outline-primary my-4" :href="'data:' + downloadData" :class="{ 'disabled': !downloadData, 'btn-success': downloadData }" download="notarized.proof">Download Proof</a>
+      </div>
 
-    <hr />
+      <hr />
 
-    <Diff :proofs="proofs" />
+      <Diff :proofs="proofs" />
+    </div>
   </div>
 </template>
 
