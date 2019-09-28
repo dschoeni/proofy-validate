@@ -1,8 +1,7 @@
 <template>
   <div>
-      <div class="d-flex flex-column align-items-center">
-        
-        <b-form-input v-model="url" placeholder="https://www.example.com"></b-form-input>
+    <div class="d-flex flex-column align-items-center">
+      <b-form-input v-model="url" placeholder="https://www.example.com"></b-form-input>
 
         <div class="btn-group">
           <button class="btn btn-primary my-4" :disabled="!url" @click="notarize(url)">
@@ -12,11 +11,9 @@
           <a class="btn btn-outline-primary my-4" :href="'data:' + downloadData" :class="{ 'disabled': !downloadData, 'btn-success': downloadData }" download="notarized.proof">Download Proof</a>
         </div>
 
-        </div>
+    <hr />
 
-        <hr />
-
-        <Diff :proofs="proofs" />
+    <Diff :proofs="proofs" />
   </div>
 </template>
 
@@ -24,12 +21,21 @@
 import validationService from '@/services/validator'
 
 export default {
-  name: "Notarize",
+  name: 'Notarize',
   components: {
     Diff: () => import('@/views/diff.vue')
   },
+  mounted() {
+    if (this.$route.query.url) {
+      this.url = this.$route.query.url
+      this.notarize(this.url)
+    }
+  },
   methods: {
     async notarize(url) {
+      if(!url.startsWith('http')){
+        url = 'https://' + url
+      }
       this.proofs = []
 
       this.isGenerating = true
@@ -61,7 +67,7 @@ export default {
       isGenerating: false
     }
   }
-};
+}
 </script>
 
 <style scoped>
