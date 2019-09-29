@@ -4,7 +4,7 @@
         <b-form-file
             v-model="file"
             :state="Boolean(file)"
-            placeholder="Choose a file or drop it here..."
+            placeholder="Choose an existing .proof file or drop it here..."
             drop-placeholder="Drop file here..."
         />
 
@@ -23,8 +23,6 @@
       <font-awesome-icon spin :icon="['fas', 'circle-notch']" />
       Finding differences to current version...
     </div>
-
-    <hr />
 
     <Diff 
     v-if="!generatingDiffs && fileSrcArray.length > 0"

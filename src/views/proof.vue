@@ -11,8 +11,6 @@
         <a class="btn my-4 btn-lg" :href="'data:' + downloadData" :class="{ 'disabled btn-outline-primary': !downloadData, 'btn-success': downloadData }" download="notarized.proof">Download Proof</a>
       </div>
 
-      <hr />
-
     </div>
 
     <Diff v-if="proofs.length > 0" :proofs="proofs" />
