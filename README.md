@@ -1,3 +1,5 @@
+<img src="logo.png" align="right" />
+
 # Veritas Frontend
 Veritas - a truthserum for the internet. we snapshot websites, and proof their content at a specific point in time using cryptographic signatures from a network of validator nodes.
 
