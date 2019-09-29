@@ -5,10 +5,10 @@ import '@/custom.scss'
 
 Vue.use(BootstrapVue)
 
-import { faCircleNotch, faCheck, faFileAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCircleNotch, faCheck, faFileAlt, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
-library.add(faCircleNotch, faCheck, faFileAlt)
+library.add(faCircleNotch, faCheck, faFileAlt, faExclamationTriangle)
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.component('font-awesome-icon', FontAwesomeIcon)

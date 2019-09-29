@@ -10,10 +10,10 @@ $brand-color: #09b39c;
 $green: #09b39c;
 $blue: #2c3e50;
 
+$body-bg: $green;
+
 // Link Hover
 $link-hover-decoration: none;
-
-$body-color: #09b39c;
 
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/dist/bootstrap-vue.css';

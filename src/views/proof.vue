@@ -5,7 +5,7 @@
 
       <div class="btn-group">
         <button class="btn btn-primary my-4" :disabled="!url" @click="notarize(url)">
-          <font-awesome-icon :class="{ 'no-opacity': !isGenerating }" :spin="isGenerating" :icon="['fas', 'circle-notch']" />
+          <font-awesome-icon v-if="isGenerating" :spin="isGenerating" :icon="['fas', 'circle-notch']" />
           Generate Proof
         </button>
         <a class="btn btn-outline-primary my-4" :href="'data:' + downloadData" :class="{ 'disabled': !downloadData, 'btn-success': downloadData }" download="notarized.proof">Download Proof</a>
