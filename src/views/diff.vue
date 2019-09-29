@@ -11,6 +11,16 @@
         </template>
 
         <div v-if="proofs[index]">
+          <div v-if="validationResults && validationResults[validator.key] === true">
+            <div><small>Integrity: <br><span class="text-white">Verified & Intact</span></small></div>
+          </div>
+
+          <div v-if="validationResults && validationResults[validator.key] === false">
+            <div><small>Integrity: <br>
+            <font-wesome-icon :icon="['fas', 'exclamation-triangle']" /><span class="text-white">Tampered</span></small></div>
+          </div>
+
+          <div><small>Time: <br><span class="text-white">{{ new Date(proofs[index].signed.timestamp) }}</span></small></div>
           <div><small>Hash: <br><span class="text-white">{{ convertToString(proofs[index].hash) }}</span></small></div>
           <div class="pb-3"><small>Signature: <br><span class="text-white">{{ convertToString(proofs[index].signature) }}</span></small></div>
           <iframe sandbox class="iframe" v-if="diffs[index]" :srcDoc="baseUrlCorrection(diffs[index])" />

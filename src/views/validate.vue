@@ -9,8 +9,8 @@
         />
 
         <div class="btn-group">
-          <button class="btn btn-primary my-4" :disabled="!fileContent" @click="validate(fileContent)">Validate</button>
-          <button class="btn btn-outline-primary my-4" :class="{ 'btn-success': fileSrcArray.length > 0 }" :disabled="fileSrcArray.length === 0" @click="createDiffs">Create Diffs</button>
+          <button class="btn btn-lg btn-primary my-4" :disabled="!fileContent" @click="validate(fileContent)">Validate</button>
+          <button class="btn btn-lg my-4" :class="{ 'btn-outline-primary': fileSrcArray.length === 0, 'btn-success': fileSrcArray.length > 0 }" :disabled="fileSrcArray.length === 0" @click="createDiffs">Create Diffs</button>
         </div>
 
         <div v-if="hasBeenTampered" class="alert alert-danger">
@@ -27,6 +27,7 @@
     <hr />
 
     <Diff 
+    v-if="!generatingDiffs && fileSrcArray.length > 0"
     :proofs="fileSrcArray"
     :validationResults="validationResults"
     :diffs="diffs"
@@ -97,8 +98,6 @@ export default {
         }
       }))
 
-      console.log(this.diffs)
-      
       this.generatingDiffs = false
     },
     async validate(fileContent) {
@@ -148,6 +147,6 @@ export default {
 }
 
 .validated {
-  color: $green;
+  color: $brand-color;
 }
 </style>

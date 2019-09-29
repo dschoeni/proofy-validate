@@ -13,10 +13,13 @@
     </div>
     </div>
     <div class="container">
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center py-2">
       <ul class="nav py-4">
         <li class="nav-item">
           <router-link class="my-4 px-4" to="/">Generate</router-link>
+        </li>
+        <li class="nav-item text-white">
+          or
         </li>
         <li class="nav-item">
           <router-link class="my-4 px-4" to="/validate">Validate</router-link>
